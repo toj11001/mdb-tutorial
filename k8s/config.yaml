@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: multi-organization-secret
+  name: organization-secret
   namespace: mongodb
 stringData:
   publicKey: <PUBLIC KEY>
@@ -11,7 +11,7 @@ stringData:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: multi-project
+  name: my-project
   namespace: mongodb
 data:
   baseUrl: "${URL}"
