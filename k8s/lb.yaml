@@ -1,0 +1,46 @@
+# LoadBalancer Service for demo-mongodb-cluster-1-0
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-mongodb-cluster-1-0-lb
+  namespace: mongodb
+spec:
+  type: LoadBalancer
+  selector:
+    statefulset.kubernetes.io/pod-name: demo-mongodb-cluster-1-0  # Specific pod selector
+  ports:
+    - name: mongodb
+      port: 27017
+      targetPort: 27017
+
+---
+# LoadBalancer Service for demo-mongodb-cluster-1-1
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-mongodb-cluster-1-1-lb
+  namespace: mongodb
+spec:
+  type: LoadBalancer
+  selector:
+    statefulset.kubernetes.io/pod-name: demo-mongodb-cluster-1-1  # Specific pod selector
+  ports:
+    - name: mongodb
+      port: 27017
+      targetPort: 27017
+
+---
+# LoadBalancer Service for demo-mongodb-cluster-1-2
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-mongodb-cluster-1-2-lb
+  namespace: mongodb
+spec:
+  type: LoadBalancer
+  selector:
+    statefulset.kubernetes.io/pod-name: demo-mongodb-cluster-1-2  # Specific pod selector
+  ports:
+    - name: mongodb
+      port: 27017
+      targetPort: 27017

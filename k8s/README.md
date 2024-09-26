@@ -15,5 +15,11 @@ GCP CLI
 - Log into OpsManager: Configure the ApiKey and whitelist your IP Address
     - Go to your Org -> `Access Manager` --> `API Keys` -> Click `Create API Key` (Permision `Org Owner`)
 - Deploy the MongoDB Cluster
+    - 
+- Cleaning Up:
+    - Tear Down MongoDB: `kubectl delete -f config.yaml -f DemoDB.yaml` 
+    - Tear Down Ops Manager: `kubectl delete -f opsManager.yaml`
+    - Delete all pvcs: `kubectl delete pvc --all -n mongodb`
+    - Delete load balancers: `kubectl delete -f lb.yaml`
 
 
