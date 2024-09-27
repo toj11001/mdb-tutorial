@@ -1,7 +1,7 @@
-./deployMdbOperator.sh
+./2_deployMdbOperator.sh
 
 kubectl apply -f opsManager.yaml
 
 kubectl config set-context --current --namespace=mongodb
 
-./getStatus.sh
+./4_getStatus.sh

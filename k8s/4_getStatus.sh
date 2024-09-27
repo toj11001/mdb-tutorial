@@ -27,3 +27,13 @@ kubectl get svc
 
 export URL=http://$(kubectl -n "${NAMESPACE}" get svc ops-manager-svc-ext -o jsonpath='{.status.loadBalancer.ingress[0].ip}:{.spec.ports[0].port}')
 echo "\nOps Manager URL: $URL"
+
+
+PASSWORD=$(kubectl get secret --namespace "${NAMESPACE}" om-admin-secret -o jsonpath='{.data.Password}' | base64 --decode)
+USERNAME=$(kubectl get secret --namespace "${NAMESPACE}" om-admin-secret -o jsonpath='{.data.Username}' | base64 --decode)
+USERNAME="tobias.joschko@mongodb.com"
+PASSWORD="qwes1MsZ$"
+
+curl -u "tobias.joschko@mongodb.com:qwes1MsZ$" \
+    -H "Content-Type: application/json" \
+    -X GET "$URL/api/public/v1.0/orgs"
