@@ -15,6 +15,7 @@ GCP CLI
     - Update Ops Manager K8S manifest to contain the external URL: `kubectl -n mongodb patch om ops-manager --type=merge -p "{\"spec\":{\"configuration\":{\"mms.centralUrl\":\"${URL}\"}}}"`
 - Log into OpsManager: Configure the ApiKey and whitelist your IP Address
     - Go to your Org -> `Access Manager` --> `API Keys` -> Click `Create API Key` (Permision `Org Owner`)
+    - Copy and rename `config.yaml.sample` to `config.yaml`: Get the API Key information and OrgID from OpsManager
 - Deploy the MongoDB Cluster
     - `5_deployDB.sh`
 - Cleaning Up:
