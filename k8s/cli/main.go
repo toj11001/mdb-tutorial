@@ -1,6 +1,5 @@
 /*
-Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
+Copyright © 2024 Tobias Joschko <tobias.joschko@mongodb.com>
 */
 package main
 
