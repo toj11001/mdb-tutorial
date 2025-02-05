@@ -25,4 +25,7 @@ GCP CLI
     - Delete all pvcs: `kubectl delete pvc --all -n mongodb`
     - Delete load balancers: `kubectl delete -f lb.yaml`
 
+## CLI Tool
+
+This repository includes a CLI tool to manage the MongoDB Kubernetes Operator and Ops Manager.
 
