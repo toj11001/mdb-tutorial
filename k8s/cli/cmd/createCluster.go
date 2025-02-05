@@ -1,39 +1,53 @@
-/*
-Copyright © 2024 Tobias Joschko <tobias.joschko@mongodb.com>
-*/
 package cmd
 
 import (
 	"fmt"
+	"os"
+	"os/exec"
 
 	"github.com/spf13/cobra"
 )
 
-// createClusterCmd represents the createCluster command
 var createClusterCmd = &cobra.Command{
-	Use:   "createCluster",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Use:   "create-cluster",
+	Short: "Creates a Kubernetes cluster in GCP or Azure",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("createCluster called")
+		provider, _ := cmd.Flags().GetString("provider")
+
+		if provider == "" {
+			fmt.Println("Error: You must specify a cloud provider using --provider=gcp or --provider=azure")
+			return
+		}
+
+		err := createKubernetesCluster(provider)
+		if err != nil {
+			fmt.Printf("Failed to create Kubernetes cluster: %v\n", err)
+			return
+		}
+
+		fmt.Println("Kubernetes cluster created successfully!")
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(createClusterCmd)
+	createClusterCmd.Flags().StringP("provider", "p", "", "Specify cloud provider: gcp or azure")
+}
 
-	// Here you will define your flags and configuration settings.
+func createKubernetesCluster(provider string) error {
+	var cmd *exec.Cmd
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// createClusterCmd.PersistentFlags().String("foo", "", "A help for foo")
+	if provider == "gcp" {
+		fmt.Println("Creating Kubernetes cluster in GCP...")
+		cmd = exec.Command("gcloud", "container", "clusters", "create", "my-cluster", "--zone", "us-central1-a")
+	} else if provider == "azure" {
+		fmt.Println("Creating Kubernetes cluster in Azure...")
+		cmd = exec.Command("az", "aks", "create", "--resource-group", "my-resource-group", "--name", "my-cluster", "--node-count", "3", "--enable-addons", "monitoring", "--generate-ssh-keys")
+	} else {
+		return fmt.Errorf("invalid provider: %s. Use 'gcp' or 'azure'", provider)
+	}
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// createClusterCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	return cmd.Run()
 }

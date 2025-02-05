@@ -162,3 +162,4 @@ cython_debug/
 #.idea/
 k8s/config.yaml
 k8s/cli/cli
+k8s/cli/bin/
